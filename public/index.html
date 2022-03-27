@@ -24,6 +24,31 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
+    <script>
+      function AddF(stateP, num) {
+        console.log(num)
+        var valueInput = $('#' + stateP + 'Input' + num).val()
+        document.getElementById(stateP + num).innerHTML = '<div id="' + stateP + num + '" class="listIndivide" onClick="UDF(\'' + stateP + '\',\'' + valueInput + '\',' + num  + ')">' + valueInput + '</div>'
+        var none = JSON.parse(localStorage.getItem(stateP))
+        for (var i = 0; i < none.length; i++) {
+          if ((num-1) === i) {
+            none[i] = {
+              value: valueInput,
+              state: stateP,
+            }
+          }
+        }
+        localStorage.setItem(stateP, JSON.stringify(none));
+        console.log(none)
+      }
+      function UDF(stateP, valueInput, num) {
+        document.getElementById(stateP + num).innerHTML = '<div class="listIndivide" onClick="AddF(\'' + stateP + '\',' + num + ')"><input id="' + stateP + 'Input' + num + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/></div>'
+        $('#' + stateP + 'Input' + num).val(valueInput)
+        $('#' + stateP + 'Input' + num).focus()
+      }
+    </script>
+
     <title>React App</title>
   </head>
   <body>
