@@ -22,7 +22,7 @@ function BuildFirstF(list) {
         state: 'none',
       })
       document.getElementById('none').innerHTML += 
-      '<div id = "none' + none.length + '" draggable="true" onDragStart="DragStartF(event)" onDrag="DragF(event)" onDragEnd="DragEndF(event)" onDrop="DropMF(event)">' + 
+      '<div id = "none' + none.length + '" draggable="true" onDragStart="DragStartF(event,\'none\',' + none.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
         '<div class="UboxSelect UboxSelectnone' + none.length + '" onClick="UpdateF(\'none\',\'' + list[i].value + '\',' + none.length + ')" onMouseOver="UDshowF(\'none\',' + none.length + ')" onMouseOut="UDhideF(\'none\',' + none.length + ')">수정</div>' +
         '<div class="DboxSelect DboxSelectnone' + none.length + '" onClick="DeleteF(\'none\',' + none.length + ')" onMouseOver="UDshowF(\'none\',' + none.length + ')" onMouseOut="UDhideF(\'none\',' + none.length + ')">삭제</div>' +
         '<div class="listIndivide listIndividenone' + none.length + '" onMouseOver="BoxshowF(\'none\',' + none.length + ')" onMouseOut="BoxhideF(\'none\',' + none.length + ')">' + 
@@ -39,7 +39,7 @@ function BuildFirstF(list) {
         state: 'ready',
       })
       document.getElementById('ready').innerHTML += 
-      '<div id = "ready' + ready.length + '">' + 
+      '<div id = "ready' + ready.length + '" draggable="true" onDragStart="DragStartF(event,\'ready\',' + ready.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
         '<div class="UboxSelect UboxSelectready' + ready.length + '" onClick="UpdateF(\'ready\',\'' + list[i].value + '\',' + ready.length + ')" onMouseOver="UDshowF(\'ready\',' + ready.length + ')" onMouseOut="UDhideF(\'ready\',' + ready.length + ')">수정</div>' +
         '<div class="DboxSelect DboxSelectready' + ready.length + '" onClick="DeleteF(\'ready\',' + ready.length + ')" onMouseOver="UDshowF(\'ready\',' + ready.length + ')" onMouseOut="UDhideF(\'ready\',' + ready.length + ')">삭제</div>' +
         '<div class="listIndivide listIndivideready' + ready.length + '" onMouseOver="BoxshowF(\'ready\',' + ready.length + ')" onMouseOut="BoxhideF(\'ready\',' + ready.length + ')">' + 
@@ -56,7 +56,7 @@ function BuildFirstF(list) {
         state: 'ongoing',
       })
       document.getElementById('ongoing').innerHTML += 
-      '<div id = "ongoing' + ongoing.length + '">' + 
+      '<div id = "ongoing' + ongoing.length + '" draggable="true" onDragStart="DragStartF(event,\'ongoing\',' + ongoing.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
         '<div class="UboxSelect UboxSelectongoing' + ongoing.length + '" onClick="UpdateF(\'ongoing\',\'' + list[i].value + '\',' + ongoing.length + ')" onMouseOver="UDshowF(\'ongoing\',' + ongoing.length + ')" onMouseOut="UDhideF(\'ongoing\',' + ongoing.length + ')">수정</div>' +
         '<div class="DboxSelect DboxSelectongoing' + ongoing.length + '" onClick="DeleteF(\'ongoing\',' + ongoing.length + ')" onMouseOver="UDshowF(\'ongoing\',' + ongoing.length + ')" onMouseOut="UDhideF(\'ongoing\',' + ongoing.length + ')">삭제</div>' +
         '<div class="listIndivide listIndivideongoing' + ongoing.length + '" onMouseOver="BoxshowF(\'ongoing\',' + ongoing.length + ')" onMouseOut="BoxhideF(\'ongoing\',' + ongoing.length + ')">' + 
@@ -73,7 +73,7 @@ function BuildFirstF(list) {
         state: 'done',
       })
       document.getElementById('done').innerHTML += 
-      '<div id = "done' + done.length + '">' + 
+      '<div id = "done' + done.length + '" draggable="true" onDragStart="DragStartF(event,\'done\',' + done.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
         '<div class="UboxSelect UboxSelectdone' + done.length + '" onClick="UpdateF(\'done\',\'' + list[i].value + '\',' + done.length + ')" onMouseOver="UDshowF(\'done\',' + done.length + ')" onMouseOut="UDhideF(\'done\',' + done.length + ')">수정</div>' +
         '<div class="DboxSelect DboxSelectdone' + done.length + '" onClick="DeleteF(\'done\',' + done.length + ')" onMouseOver="UDshowF(\'done\',' + done.length + ')" onMouseOut="UDhideF(\'done\',' + done.length + ')">삭제</div>' +
         '<div class="listIndivide listIndividedone' + done.length + '" onMouseOver="BoxshowF(\'done\',' + done.length + ')" onMouseOut="BoxhideF(\'done\',' + done.length + ')">' + 
@@ -111,25 +111,71 @@ function App () {
 
   }).catch((error) => { console.log(error) })
 
-  function DragOverF (e) {
-    $('#readyhr').css('display', 'block')
+
+
+  function DeleteF(stateP, num) {
+    var none = JSON.parse(localStorage.getItem(stateP))
+    none.splice(num-1, 1)
+    localStorage.setItem(stateP, JSON.stringify(none));
+    console.log(none)
+    
+    for (var i = num-1; i < none.length; i++) {
+      document.getElementById(stateP + (i+1)).innerHTML = 
+      '<div class="UboxSelect UboxSelect' + stateP + (i+1) + '" onClick="UpdateF(\'' + stateP + '\',\'' + none[i].value + '\',' + (i+1) + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + (i+1) + ')">수정</div>' +
+      '<div class="DboxSelect DboxSelect' + stateP + (i+1) + '" onClick="DeleteF(\'' + stateP + '\',' + (i+1) + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + (i+1)+ ')">삭제</div>' +
+      '<div class="listIndivide listIndivide' + stateP + (i+1) + '" onMouseOver="BoxshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + (i+1) + ')">' + 
+        '<div class="value">' + none[i].value + '</div>' + 
+        '<div class="UDbox UDbox' + stateP + (i+1) + '" onMouseOver="UDshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + (i+1) + ')">' + 
+        '</div>' + 
+      '</div>' 
+    }
+    document.getElementById(stateP + (none.length+1)).remove()
   }
-  function DragLeaveF(e) {
-    $('#readyhr').css('display', 'none')
-  }
-  function DragEnterF (e) {
+
+  function DragOverF (e, stateP) {
     e.preventDefault()
+    $('#' + stateP + 'hr').css('display', 'block')
+  }
+  function DragLeaveF(e, stateP) {
+    $('#' + stateP + 'hr').css('display', 'none')
+    // return false
+  }
+  function DragEnterF (e, stateP) {
     // console.log('enter')
   }
-  function DropF (e) {
+  function DropF (e, stateP) {
     e.preventDefault()
-    console.log(e)
     console.log('drop')
+    $('#' + stateP + 'hr').css('display', 'none')
+
+    var titleM = e.dataTransfer.getData("title")
+    var none = JSON.parse(localStorage.getItem(stateP))
+    console.log(none)
+    none.push({
+      value: titleM,
+      state: stateP,
+    })
+    localStorage.setItem(stateP, JSON.stringify(none))
+    console.log(none)
+
+    document.getElementById(stateP).innerHTML += 
+    '<div id = "' + stateP + none.length + '" draggable="true" onDragStart="DragStartF(event,\'' + stateP + '\',' + none.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
+      '<div class="UboxSelect UboxSelect' + stateP + none.length + '" onClick="UpdateF(\'' + stateP + '\',\'' + titleM + '\',' + none.length + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + none.length + ')">수정</div>' +
+      '<div class="DboxSelect DboxSelect' + stateP + none.length + '" onClick="DeleteF(\'' + stateP + '\',' + none.length + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + none.length + ')">삭제</div>' +
+      '<div class="listIndivide listIndivide' + stateP + none.length + '" onMouseOver="BoxshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + none.length + ')">' + 
+        '<div class="value">' + titleM + '</div>' + 
+        '<div class="UDbox UDbox' + stateP + none.length + '" onMouseOver="UDshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + none.length + ')">' + 
+        '</div>' + 
+      '</div>' + 
+    '</div>'
+    
+    var stateMP = e.dataTransfer.getData("stateP")
+    var numM = e.dataTransfer.getData("num")
+    DeleteF(stateMP, numM)
   }
 
   return (
     <div className="App">
-      <div id='a'></div>
       <div style={{ textAlign: 'center', }}>
         <div style={{ width: '100%', minWidth: '850px', height: 'auto', display: 'inline-block', }}>
           <h1>Vanilla JS Drag&amp;Drop Todo List 구현 (50점)</h1><hr/>
@@ -144,7 +190,8 @@ function App () {
               <span style={{ padding: '0px 7px', fontWeight: '600', }}>상태 없음</span>
             </div>
             <div id='none'></div>
-            <div id='AddFdd' style={{ textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
+            <hr id='nonehr' className='hr'/>
+            <div id='noneAdd' onDragOver={(e) => DragOverF(e, 'none')} onDragLeave={(e) => DragLeaveF(e, 'none')} onDragEnter={DragEnterF} onDrop={(e) => DropF(e, 'none')} style={{ textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
               var none = JSON.parse(localStorage.getItem('none'))
               none.push({
                 value: "",
@@ -153,7 +200,7 @@ function App () {
               localStorage.setItem('none', JSON.stringify(none))
               console.log(none)
               document.getElementById('none').innerHTML += 
-              '<div id = "none' + none.length + '">' + 
+              '<div id = "none' + none.length + '" draggable="true" onDragStart="DragStartF(event,\'none\',' + none.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
                 '<div class="listIndivide listIndividenone' + none.length + '" onClick="AddF(\'none\',' + none.length + ')" onMouseOver="BoxshowF(\'none\',' + none.length + ')" onMouseOut="BoxhideF(\'none\',' + none.length + ')">' + 
                   '<input id="noneInput' + none.length + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/ onMouseOver="BoxshowF(\'none\',' + none.length + ')" onMouseOut="BoxhideF(\'none\',' + none.length + ')">' +
                   '<div class="UDbox UDboxnone' + none.length + '">' +
@@ -170,7 +217,7 @@ function App () {
             </div>
             <div id='ready'></div>
             <hr id='readyhr' className='hr'/>
-            <div id='readyAdd'  onDragOver={DragOverF} onDragLeave={DragLeaveF} onDragEnter={DragEnterF} onDrop={DropF} style={{  textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
+            <div id='readyAdd' onDragOver={(e) => DragOverF(e, 'ready')} onDragLeave={(e) => DragLeaveF(e, 'ready')} onDragEnter={DragEnterF} onDrop={(e) => DropF(e, 'ready')} style={{  textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
               var ready = JSON.parse(localStorage.getItem('ready'))
               ready.push({
                 value: "",
@@ -178,7 +225,7 @@ function App () {
               })
               localStorage.setItem('ready', JSON.stringify(ready))
               document.getElementById('ready').innerHTML += 
-              '<div id = "ready' + ready.length + '" class="readyClass">' + 
+              '<div id = "ready' + ready.length + '"  draggable="true" onDragStart="DragStartF(event,\'ready\',' + ready.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
                 '<div class="listIndivide listIndivideready' + ready.length + '" onClick="AddF(\'ready\',' + ready.length + ')" onMouseOver="BoxshowF(\'ready\',' + ready.length + ')" onMouseOut="BoxhideF(\'ready\',' + ready.length + ')">' + 
                   '<input id="readyInput' + ready.length + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/ onMouseOver="BoxshowF(\'ready\',' + ready.length + ')" onMouseOut="BoxhideF(\'ready\',' + ready.length + ')">' +
                   '<div class="UDbox UDboxready' + ready.length + '">' +
@@ -194,7 +241,8 @@ function App () {
               <span style={{ padding: '0px 7px', fontWeight: '600', backgroundColor: 'rgb(255, 248, 150)', }}>진행 중</span>
             </div>
             <div id='ongoing'></div>
-            <div id='ongoingAdd' style={{  textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
+            <hr id='ongoinghr' className='hr'/>
+            <div id='ongoingAdd' onDragOver={(e) => DragOverF(e, 'ongoing')} onDragLeave={(e) => DragLeaveF(e, 'ongoing')} onDragEnter={DragEnterF} onDrop={(e) => DropF(e, 'ongoing')} style={{  textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
               var ongoing = JSON.parse(localStorage.getItem('ongoing'))
               ongoing.push({
                 value: "",
@@ -202,7 +250,7 @@ function App () {
               })
               localStorage.setItem('ongoing', JSON.stringify(ongoing))
               document.getElementById('ongoing').innerHTML += 
-              '<div id = "ongoing' + ongoing.length + '">' + 
+              '<div id = "ongoing' + ongoing.length + '"  draggable="true" onDragStart="DragStartF(event,\'ongoing\',' + ongoing.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
                 '<div class="listIndivide listIndivideongoing' + ongoing.length + '" onClick="AddF(\'ongoing\',' + ongoing.length + ')" onMouseOver="BoxshowF(\'ongoing\',' + ongoing.length + ')" onMouseOut="BoxhideF(\'ongoing\',' + ongoing.length + ')">' + 
                   '<input id="ongoingInput' + ongoing.length + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/ onMouseOver="BoxshowF(\'ongoing\',' + ongoing.length + ')" onMouseOut="BoxhideF(\'ongoing\',' + ongoing.length + ')">' +
                   '<div class="UDbox UDboxongoing' + ongoing.length + '">' +
@@ -218,7 +266,8 @@ function App () {
               <span style={{ padding: '0px 7px', fontWeight: '600', backgroundColor: 'rgb(171, 255, 171)', }}>완료</span>
             </div>
             <div id='done'></div>
-            <div id='doneAdd' style={{ textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
+            <hr id='donehr' className='hr'/>
+            <div id='doneAdd' onDragOver={(e) => DragOverF(e, 'done')} onDragLeave={(e) => DragLeaveF(e, 'done')} onDragEnter={DragEnterF} onDrop={(e) => DropF(e, 'done')} style={{ textAlign: 'left', height: '45px', margin: '10px 7px', padding: '0px 20px', lineHeight: '45px', color: 'rgb(150, 150, 150)', }} onClick={() => {
               var done = JSON.parse(localStorage.getItem('done'))
               done.push({
                 value: "",
@@ -226,7 +275,7 @@ function App () {
               })
               localStorage.setItem('done', JSON.stringify(done))
               document.getElementById('done').innerHTML += 
-              '<div id = "done' + done.length + '">' + 
+              '<div id = "done' + done.length + '" draggable="true" onDragStart="DragStartF(event,\'done\',' + done.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
                 '<div class="listIndivide listIndividedone' + done.length + '" onClick="AddF(\'done\',' + done.length + ')" onMouseOver="BoxshowF(\'done\',' + done.length + ')" onMouseOut="BoxhideF(\'done\',' + done.length + ')">' + 
                   '<input id="doneInput' + done.length + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/ onMouseOver="BoxshowF(\'done\',' + done.length + ')" onMouseOut="BoxhideF(\'done\',' + done.length + ')">' +
                   '<div class="UDbox UDboxdone' + done.length + '">' +

@@ -94,34 +94,20 @@
         document.getElementById(stateP + (none.length+1)).remove()
       }
 
-      function DragStartF(e) {
+      function DragStartF(e, stateP, num) {
         console.log('start')
-        e.dataTransfer.setData("text", "<p>a</p>")
-        // var html = ''; 
-        // $('.selected').each(function(){ 
-        //   html += 
-        //   '<li class="list">a</li>'; 
-        // });
-        // e.dataTransfer.setData('text',html);
+        // var str = e.target.innerHTML
+        // e.dataTransfer.setData("text", str)
 
-        // e.target.style.opacity = "0.5"
+        e.dataTransfer.setData("title", JSON.parse(localStorage.getItem(stateP))[num-1].value)
+        e.dataTransfer.setData("stateP", stateP)
+        e.dataTransfer.setData("num", num)
       }
       function DragF(e) {
         // console.log('drag')
-        // if ($('#done').mouseover()){
-        //   console.log('a')
-        //   $('#readyhr').css('display', 'block')
-        // }
-        // else 
-        //   $('#readyhr').css('display', 'none')
       }
       function DragEndF(e) {
         console.log('end')
-        var data = e.dataTransfer.getData("text")
-        e.target.appendChild(document.getElementById('a'))
-      }
-      function DropMF(e) {
-        console.log('dropM')
       }
     </script>
 
