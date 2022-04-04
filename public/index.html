@@ -19,32 +19,46 @@
     <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
     <script>
       function BoxshowF(stateP, num) {
-        $('.UDbox' + stateP + num).show()
-        $('.listIndivide' + stateP + num).css('background', 'rgb(219, 219, 219)')
+        // $('.UDbox' + stateP + num).fadeIn(400)
+        $('.listIndivide' + stateP + num).css('background', 'rgb(239, 239, 239)')
       }
       function BoxhideF(stateP, num) {
-        $('.UDbox' + stateP + num).hide()
-        $('.listIndivide' + stateP + num).css('background', 'white')
+        // $('.UDbox' + stateP + num).fadeOut(400)
+        $('.listIndivide' + stateP + num).css('background', '')
       }
+
       function UDshowF(stateP, num) {
-        $('.UDbox' + stateP + num).show()
-        $('.listIndivide' + stateP + num).css('background', 'rgb(219, 219, 219)')
+        $('.UDbox' + stateP + num).css('opacity', 1)
+        $('.listIndivide' + stateP + num).css('background', 'rgb(239, 239, 239)')
         $('.UboxSelect' + stateP + num).show()
         $('.DboxSelect' + stateP + num).show()
       }
       function UDhideF(stateP, num) {
-        $('.UDbox' + stateP + num).hide()
-        $('.listIndivide' + stateP + num).css('background', 'white')
+        $('.UDbox' + stateP + num).css('opacity', '')
+        $('.listIndivide' + stateP + num).css('background', '')
         $('.UboxSelect' + stateP +num).hide()
         $('.DboxSelect' + stateP + num).hide()
       }
+
+      function UDshow2F(stateP, num) {
+
+        // $('.UboxSelect' + stateP + num).show()
+        // $('.DboxSelect' + stateP + num).show()
+      }
+      function UDhide2F(stateP, num) {
+
+        $('.UboxSelect' + stateP +num).hide()
+        $('.DboxSelect' + stateP + num).hide()
+      }
+
+
 
       function AddF(stateP, num) {
         var valueInput = $('#' + stateP + 'Input' + num).val()
         document.getElementById(stateP + num).innerHTML = 
         '<div class="UboxSelect UboxSelect' + stateP + num + '" onClick="UpdateF(\'' + stateP + '\',\'' + valueInput + '\',' + num + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + num + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + num + ')">수정</div>' +
         '<div class="DboxSelect DboxSelect' + stateP + num + '" onClick="DeleteF(\'' + stateP + '\',' + num + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + num + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + num + ')">삭제</div>' +
-        '<div class="listIndivide listIndivide' + stateP + num + '" onMouseOver="BoxshowF(\'' + stateP + '\',' + num + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + num + ')">' + 
+        '<div class="listIndivide listIndivide' + stateP + num + '">' + 
           '<div class="value">' + valueInput + '</div>' + 
           '<div class="UDbox UDbox' + stateP + num + '" onMouseOver="UDshowF(\'' + stateP + '\',' + num + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + num + ')">' + 
           '</div>' + 
@@ -61,14 +75,15 @@
         }
         localStorage.setItem(stateP, JSON.stringify(none));
         console.log(none)
+        $('.listIndivide' + stateP + num).css('background', 'rgb(190, 220, 235)')
       }
 
       function UpdateF(stateP, valueInput, num) {
         $('.UboxSelect' +num).hide()
         $('.DboxSelect' + num).hide()
         document.getElementById(stateP + num).innerHTML = 
-        '<div class="listIndivide listIndivide' + stateP + num + '" onClick="AddF(\'' + stateP + '\',' + num + ')" onMouseOver="BoxshowF(\'' + stateP + '\',' + num + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + num + ')">' + 
-          '<input id="' + stateP + 'Input' + num + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/ onMouseOver="BoxshowF(\'' + stateP + '\',' + num + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + num + ')">' +
+        '<div class="listIndivide listIndivide' + stateP + num + '" onClick="AddF(\'' + stateP + '\',' + num + ')">' + 
+          '<input id="' + stateP + 'Input' + num + '" class="listIndivideInput" type="text" onMouseOver="BoxshowF(\'' + stateP + '\',' + num + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + num + ')">' +
           '<div class="UDbox UDbox' + stateP + num + '">' + 
           '</div>' + 
         '</div>'
@@ -85,7 +100,7 @@
           document.getElementById(stateP + (i+1)).innerHTML = 
           '<div class="UboxSelect UboxSelect' + stateP + (i+1) + '" onClick="UpdateF(\'' + stateP + '\',\'' + none[i].value + '\',' + (i+1) + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + (i+1) + ')">수정</div>' +
           '<div class="DboxSelect DboxSelect' + stateP + (i+1) + '" onClick="DeleteF(\'' + stateP + '\',' + (i+1) + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + (i+1)+ ')">삭제</div>' +
-          '<div class="listIndivide listIndivide' + stateP + (i+1) + '" onMouseOver="BoxshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + (i+1) + ')">' + 
+          '<div class="listIndivide listIndivide' + stateP + (i+1) + '">' + 
             '<div class="value">' + none[i].value + '</div>' + 
             '<div class="UDbox UDbox' + stateP + (i+1) + '" onMouseOver="UDshowF(\'' + stateP + '\',' + (i+1) + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + (i+1) + ')">' + 
             '</div>' + 
@@ -94,8 +109,30 @@
         document.getElementById(stateP + (none.length+1)).remove()
       }
 
+
+      function GroupAddF(stateP) {
+        $('.listIndivide').css('background', '');
+        var none = JSON.parse(localStorage.getItem(stateP))
+          none.push({
+            value: "",
+            state: stateP,
+          })
+          localStorage.setItem(stateP, JSON.stringify(none))
+          document.getElementById(stateP).innerHTML += 
+          '<div id = "' + stateP + none.length + '"  class="listIndivideBox" draggable="true" onDragStart="DragStartF(event,\'' + stateP + '\',' + none.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
+            '<div class="listIndivide listIndivide' + stateP + none.length + '" onClick="AddF(\'' + stateP +'\',' + none.length + ')">' + 
+              '<input id="' + stateP + 'Input' + none.length + '" class="listIndivideInput" type="text" placeholder="이름을 입력하세요"/ onMouseOver="BoxshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="BoxhideF(\'' + stateP + '\',' + none.length + ')">' +
+              '<div class="UDbox UDbox' + stateP + none.length + '">' +
+              '</div>' + 
+            '</div>' +
+          '</div>'
+          $('#' + stateP + 'Input' + none.length).focus()
+          console.log(none)
+      }
+
       function DragStartF(e, stateP, num) {
         console.log('start')
+        $('.listIndivide').css('background', '');
         // var str = e.target.innerHTML
         // e.dataTransfer.setData("text", str)
 
@@ -108,6 +145,51 @@
       }
       function DragEndF(e) {
         console.log('end')
+      }
+
+      function DragOverF (e, stateP) {
+        console.log(stateP)
+        e.preventDefault()
+        $('#' + stateP + 'hr').css('display', 'block')
+      }
+      function DragLeaveF(e, stateP) {
+        $('#' + stateP + 'hr').css('display', 'none')
+        // return false
+      }
+      function DragEnterF (e, stateP) {
+        // console.log('enter')
+      }
+      function DropF (e, stateP) {
+        e.preventDefault()
+        console.log('drop')
+        $('#' + stateP + 'hr').css('display', 'none')
+
+        var titleM = e.dataTransfer.getData("title")
+        var none = JSON.parse(localStorage.getItem(stateP))
+        console.log(none)
+        none.push({
+          value: titleM,
+          state: stateP,
+        })
+        localStorage.setItem(stateP, JSON.stringify(none))
+        console.log(none)
+
+        document.getElementById(stateP).innerHTML += 
+        '<div id = "' + stateP + none.length + '" draggable="true" onDragStart="DragStartF(event,\'' + stateP + '\',' + none.length + ')" onDrag="DragF(event)" onDragEnd="DragEndF(event)">' + 
+          '<div class="UboxSelect UboxSelect' + stateP + none.length + '" onClick="UpdateF(\'' + stateP + '\',\'' + titleM + '\',' + none.length + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + none.length + ')">수정</div>' +
+          '<div class="DboxSelect DboxSelect' + stateP + none.length + '" onClick="DeleteF(\'' + stateP + '\',' + none.length + ')" onMouseOver="UDshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + none.length + ')">삭제</div>' +
+          '<div class="listIndivide listIndivide' + stateP + none.length + '">' + 
+            '<div class="value">' + titleM + '</div>' + 
+            '<div class="UDbox UDbox' + stateP + none.length + '" onMouseOver="UDshowF(\'' + stateP + '\',' + none.length + ')" onMouseOut="UDhideF(\'' + stateP + '\',' + none.length + ')">' + 
+            '</div>' + 
+          '</div>' + 
+        '</div>'
+        
+        // $('.listIndivide' + stateP + none.length).css('display', 'none')
+        var stateMP = e.dataTransfer.getData("stateP")
+        var numM = e.dataTransfer.getData("num")
+        DeleteF(stateMP, numM)
+        $('.listIndivide' + stateP + none.length).css('background', 'rgb(190, 220, 235)')
       }
     </script>
 
