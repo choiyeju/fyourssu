@@ -12,30 +12,31 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+    <!-- <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
     <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> -->
     <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
     <script>
       function BoxshowF(stateP, num) {
         // $('.UDbox' + stateP + num).fadeIn(400)
-        $('.listIndivide' + stateP + num).css('background', 'rgb(239, 239, 239)')
+        $('.listIndivide' + stateP + num).css({transition: "", background: "rgb(239, 239, 239)"})
       }
       function BoxhideF(stateP, num) {
         // $('.UDbox' + stateP + num).fadeOut(400)
-        $('.listIndivide' + stateP + num).css('background', '')
+        $('.listIndivide' + stateP + num).css({transition: "", background: ""})
       }
 
       function UDshowF(stateP, num) {
         $('.UDbox' + stateP + num).css('opacity', 1)
-        $('.listIndivide' + stateP + num).css('background', 'rgb(239, 239, 239)')
+        $('.listIndivide' + stateP + num).css({transition: "", background: "rgb(239, 239, 239)"})
         $('.UboxSelect' + stateP + num).show()
         $('.DboxSelect' + stateP + num).show()
       }
       function UDhideF(stateP, num) {
         $('.UDbox' + stateP + num).css('opacity', '')
-        $('.listIndivide' + stateP + num).css('background', '')
+        $('.listIndivide' + stateP + num).css({transition: "", background: ""})
         $('.UboxSelect' + stateP +num).hide()
         $('.DboxSelect' + stateP + num).hide()
       }
@@ -75,7 +76,8 @@
         }
         localStorage.setItem(stateP, JSON.stringify(none));
         console.log(none)
-        $('.listIndivide' + stateP + num).css('background', 'rgb(190, 220, 235)')
+        $('.listIndivide' + stateP + num).css('display', 'none')
+        $('.listIndivide' + stateP + num).css({background: "rgb(190, 220, 235)"}).fadeIn(600) //skyblue
       }
 
       function UpdateF(stateP, valueInput, num) {
@@ -111,7 +113,7 @@
 
 
       function GroupAddF(stateP) {
-        $('.listIndivide').css('background', '');
+        $('.listIndivide').css({ transition: "background 1s", background: ""}) //white
         var none = JSON.parse(localStorage.getItem(stateP))
           none.push({
             value: "",
@@ -128,13 +130,12 @@
           '</div>'
           $('#' + stateP + 'Input' + none.length).focus()
           console.log(none)
+          $('.listIndivide').css({ transition: "", background: ""}) 
       }
 
       function DragStartF(e, stateP, num) {
         console.log('start')
-        $('.listIndivide').css('background', '');
-        // var str = e.target.innerHTML
-        // e.dataTransfer.setData("text", str)
+        $('.listIndivide').css({transition: "background 1s", background: ""}) //white
 
         e.dataTransfer.setData("title", JSON.parse(localStorage.getItem(stateP))[num-1].value)
         e.dataTransfer.setData("stateP", stateP)
@@ -189,7 +190,17 @@
         var stateMP = e.dataTransfer.getData("stateP")
         var numM = e.dataTransfer.getData("num")
         DeleteF(stateMP, numM)
-        $('.listIndivide' + stateP + none.length).css('background', 'rgb(190, 220, 235)')
+
+        
+        $('.listIndivide').css({ transition: "", background: ""}) 
+        if (stateP === stateMP) {
+          $('.listIndivide' + stateP + (none.length-1)).css('display', 'none')
+          $('.listIndivide' + stateP + (none.length-1)).css({ background: "rgb(190, 220, 235)"}).fadeIn(600) //skyblue
+        }
+        else {
+          $('.listIndivide' + stateP + none.length).css('display', 'none')
+          $('.listIndivide' + stateP + none.length).css({ background: "rgb(190, 220, 235)"}).fadeIn(600)  //skyblue
+        }
       }
     </script>
 

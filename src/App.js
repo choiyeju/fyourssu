@@ -6,8 +6,7 @@ import axios from 'axios';
 import $ from 'jquery';
 window.$ = $;
 
-//https://hianna.tistory.com/492
-
+//디바운스
 function BuildFirstF(list) {
   
   var none = []
