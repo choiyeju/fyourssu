@@ -76,6 +76,7 @@
         }
         localStorage.setItem(stateP, JSON.stringify(none));
         console.log(none)
+        $('.listIndivide').css({ transition: "", background: ""})
         $('.listIndivide' + stateP + num).css('display', 'none')
         $('.listIndivide' + stateP + num).css({background: "rgb(190, 220, 235)"}).fadeIn(600) //skyblue
       }
@@ -93,6 +94,8 @@
         $('#' + stateP + 'Input' + num).focus()
       }
       function DeleteF(stateP, num) {
+        var fnum = parseInt($('#listIndivideNum' + stateP).html())-1
+        $('#listIndivideNum' + stateP).text(fnum)
         var none = JSON.parse(localStorage.getItem(stateP))
         none.splice(num-1, 1)
         localStorage.setItem(stateP, JSON.stringify(none));
@@ -113,6 +116,8 @@
 
 
       function GroupAddF(stateP) {
+        var fnum = parseInt($('#listIndivideNum' + stateP).html())+1
+        $('#listIndivideNum' + stateP).text(fnum)
         $('.listIndivide').css({ transition: "background 1s", background: ""}) //white
         var none = JSON.parse(localStorage.getItem(stateP))
           none.push({
@@ -130,7 +135,7 @@
           '</div>'
           $('#' + stateP + 'Input' + none.length).focus()
           console.log(none)
-          $('.listIndivide').css({ transition: "", background: ""}) 
+          // $('.listIndivide').css({ transition: "", background: ""}) 
       }
 
       function DragStartF(e, stateP, num) {
@@ -168,6 +173,9 @@
         var titleM = e.dataTransfer.getData("title")
         var none = JSON.parse(localStorage.getItem(stateP))
         console.log(none)
+
+        var fnum = parseInt($('#listIndivideNum' + stateP).html())+1
+        $('#listIndivideNum' + stateP).text(fnum)
         none.push({
           value: titleM,
           state: stateP,
@@ -195,11 +203,11 @@
         $('.listIndivide').css({ transition: "", background: ""}) 
         if (stateP === stateMP) {
           $('.listIndivide' + stateP + (none.length-1)).css('display', 'none')
-          $('.listIndivide' + stateP + (none.length-1)).css({ background: "rgb(190, 220, 235)"}).fadeIn(600) //skyblue
+          $('.listIndivide' + stateP + (none.length-1)).css({ background: "#CBE4EC"}).fadeIn(600) //skyblue
         }
         else {
           $('.listIndivide' + stateP + none.length).css('display', 'none')
-          $('.listIndivide' + stateP + none.length).css({ background: "rgb(190, 220, 235)"}).fadeIn(600)  //skyblue
+          $('.listIndivide' + stateP + none.length).css({ background: "#CBE4EC"}).fadeIn(600)  //skyblue
         }
       }
     </script>

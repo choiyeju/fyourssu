@@ -1,21 +1,28 @@
 import React, { Component, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import minmax from './minmax.png';
+import zzum from './zzum.png';
+import plus from './plus.png';
+import nobox from './nobox.png';
+import { SearchBoxTest } from './components/SearchBoxText';
 
 import axios from 'axios';
 import $ from 'jquery';
 window.$ = $;
 
-//디바운스
 function BuildFirstF(list) {
   
   var none = []
   var ready = []
   var ongoing = []
   var done = []
+  var num = 0
 
   for (var i = 0; i < list.length; i++) {
     if (list[i].state === "none"){
+      num = parseInt($('#listIndivideNumnone').html())+1
+      $('#listIndivideNumnone').text(num)
       none.push({
         value: list[i].value,
         state: 'none',
@@ -33,6 +40,8 @@ function BuildFirstF(list) {
       $('#noneInput' + none.length).val(list[i].value)
     }
     else if (list[i].state === "ready") {
+      num = parseInt($('#listIndivideNumready').html())+1
+      $('#listIndivideNumready').text(num)
       ready.push({
         value: list[i].value,
         state: 'ready',
@@ -50,6 +59,8 @@ function BuildFirstF(list) {
       $('#readyInput' + ready.length).val(list[i].value)
     }
     else if (list[i].state === "ongoing") {
+      num = parseInt($('#listIndivideNumongoing').html())+1
+      $('#listIndivideNumongoing').text(num)
       ongoing.push({
         value: list[i].value,
         state: 'ongoing',
@@ -67,6 +78,8 @@ function BuildFirstF(list) {
       $('#ongoingInput' + ongoing.length).val(list[i].value)
     }
     else if (list[i].state === "done") {
+      num = parseInt($('#listIndivideNumdone').html())+1
+      $('#listIndivideNumdone').text(num)
       done.push({
         value: list[i].value,
         state: 'done',
@@ -92,53 +105,75 @@ function BuildFirstF(list) {
   localStorage.setItem('number', 4)
 }
 
-function App () {
-  axios.get('https://my-json-server.typicode.com/jaewoong2/recruiting/0', {
-  }).then((response)=>{
-    document.getElementById('listMain').innerHTML = 
-    "<div id='listIndivideMainnone' class='listIndivideMain'>" +
+axios.get('https://my-json-server.typicode.com/jaewoong2/recruiting/0', {
+}).then((response)=>{
+  document.getElementById('listMain').innerHTML = 
+  "<div id='listIndivideMainnone' class='listIndivideMain'>" +
       "<div class='listIndivideMainInner1'>" +
-        "<span class='listIndivideMainInner2'>상태 없음</span>" +
+        "<div class='flex'>" +
+          "<img class='fimage' src='" + nobox + "'/>" +
+          "<span class='listIndivideMainInner2'>상태 없음</span>" +
+          "<span id='listIndivideNumnone' class='listIndivideMainInner3'>0</span>" +
+          "<img class='image' src='" + plus + "'/>" +
+          "<img class='image' src='" + zzum + "'/>" +
+        "</div>" +
       "</div>" +
       "<div id='none' class='listIndivideMainBox'></div>" +
       "<hr id='nonehr' class='hr'/>" +
-      '<div id="noneAdd" class="listIndivideMainInner3" onDragOver="DragOverF(event, \'none\')" onDragLeave="DragLeaveF(event, \'none\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'none\')" onClick="GroupAddF(\'none\')">새로 만들기</div>' +
+      '<div id="noneAdd" class="listIndivideMainInner4" onDragOver="DragOverF(event, \'none\')" onDragLeave="DragLeaveF(event, \'none\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'none\')" onClick="GroupAddF(\'none\')">새로 만들기</div>' +
     "</div>" +
     "<div id='listIndivideMainready' class='listIndivideMain'>" +
       "<div class='listIndivideMainInner1'>" +
-        "<span id='listIndivideMainInnerready' class='listIndivideMainInner2'>시작 전</span>" +
+        "<div class='flex'>" +
+          "<span id='listIndivideMainInnerready' class='listIndivideMainInner2'>시작 전</span>" +
+          "<span id='listIndivideNumready' class='listIndivideMainInner3'>0</span>" +
+          "<img class='image' src='" + plus + "'/>" +
+          "<img class='image' src='" + zzum + "'/>" +
+        "</div>" +
       "</div>" +
       "<div id='ready' class='listIndivideMainBox'></div>" +
       "<hr id='readyhr' class='hr'/>" +
-      '<div id="readyAdd" class="listIndivideMainInner3" onDragOver="DragOverF(event, \'ready\')" onDragLeave="DragLeaveF(event, \'ready\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'ready\')" onClick="GroupAddF(\'ready\')">새로 만들기</div>' +
+      '<div id="readyAdd" class="listIndivideMainInner4" onDragOver="DragOverF(event, \'ready\')" onDragLeave="DragLeaveF(event, \'ready\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'ready\')" onClick="GroupAddF(\'ready\')">새로 만들기</div>' +
     "</div>" +
     "<div id='listIndivideMainongoing' class='listIndivideMain'>" +
       "<div class='listIndivideMainInner1'>" +
-        "<span id='listIndivideMainInnerongoing' class='listIndivideMainInner2'>진행 중</span>" +
+        "<div class='flex'>" +
+          "<span id='listIndivideMainInnerongoing' class='listIndivideMainInner2'>진행 중</span>" +
+          "<span id='listIndivideNumongoing' class='listIndivideMainInner3'>0</span>" +
+          "<img class='image' src='" + plus + "'/>" +
+          "<img class='image' src='" + zzum + "'/>" +
+        "</div>" +
       "</div>" +
       "<div id='ongoing' class='listIndivideMainBox'></div>" +
       "<hr id='ongoinghr' class='hr'/>" +
-      '<div id="ongoingAdd" class="listIndivideMainInner3" onDragOver="DragOverF(event, \'ongoing\')" onDragLeave="DragLeaveF(event, \'ongoing\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'ongoing\')" onClick="GroupAddF(\'ongoing\')">새로 만들기</div>' +
+      '<div id="ongoingAdd" class="listIndivideMainInner4" onDragOver="DragOverF(event, \'ongoing\')" onDragLeave="DragLeaveF(event, \'ongoing\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'ongoing\')" onClick="GroupAddF(\'ongoing\')">새로 만들기</div>' +
     "</div>" +
     "<div id='listIndivideMaindone' class='listIndivideMain'>" +
       "<div class='listIndivideMainInner1'>" +
-        "<span id='listIndivideMainInnerdone' class='listIndivideMainInner2'>완료</span>" +
+        "<div class='flex'>" +
+          "<span id='listIndivideMainInnerdone' class='listIndivideMainInner2'>완료</span>" +
+          "<span id='listIndivideNumdone' class='listIndivideMainInner3'>0</span>" +
+          "<img class='image' src='" + plus + "'/>" +
+          "<img class='image' src='" + zzum + "'/>" +
+        "</div>" +
       "</div>" +
       "<div id='done' class='listIndivideMainBox'></div>" +
       "<hr id='donehr' class='hr'/>" +
-      '<div id="doneAdd" class="listIndivideMainInner3" onDragOver="DragOverF(event, \'done\')" onDragLeave="DragLeaveF(event, \'done\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'done\')" onClick="GroupAddF(\'done\')">새로 만들기</div>' +
+      '<div id="doneAdd" class="listIndivideMainInner4" onDragOver="DragOverF(event, \'done\')" onDragLeave="DragLeaveF(event, \'done\')" onDragEnter="DragEnterF()" onDrop="DropF(event, \'done\')" onClick="GroupAddF(\'done\')">새로 만들기</div>' +
     "</div>"
 
-    document.getElementById('none').innerHTML = ""
-    document.getElementById('ready').innerHTML = ""
-    document.getElementById('ongoing').innerHTML = ""
-    document.getElementById('done').innerHTML = ""
+  document.getElementById('none').innerHTML = ""
+  document.getElementById('ready').innerHTML = ""
+  document.getElementById('ongoing').innerHTML = ""
+  document.getElementById('done').innerHTML = ""
 
-    BuildFirstF(response.data)
+  BuildFirstF(response.data)
 
-  }).catch((error) => { console.log(error) })
+}).catch((error) => { console.log(error) })
 
+export class App extends Component {
 
+render() {
   return (
     <div className="App">
       <div style={{ width: '100%', height: '100vh', textAlign: 'center', }}>
@@ -150,12 +185,20 @@ function App () {
             </div>
           </div>
           <div class='top' style={{ padding: '0px 0px 9px 0px', textAlign: 'left', display: 'inline-block', }}>
-            <div style={{}}>
-              <div style={{ fontSize: '22px', fontWeight: '700', float: 'left', background: 'blue' }}>Todo List</div>
-              <div style={{ fontSize: '22px', fontWeight: '700', float: 'right', background: 'blue' }}>새로만들기</div>
-              <div style={{ fontSize: '22px', fontWeight: '700', float: 'right', background: 'blue' }}>검색</div>
+              <div style={{ padding:'5px 0px 0px 0px', fontSize: '22px', fontWeight: '700', float: 'left', }}>Todo List</div>
+              <img style={{ width: '20px', float: 'left', margin: '10px 5px 0px 15px', padding: '0px 0px',  }} src={plus}/>
+              <div style={{ float: 'left', margin: '9px 5px 0px 0px', padding: '0px 5px 0px 0px', color: 'gray', fontWeight: '700', }}>보기추가</div>
+              
+              <div style={{float: 'right', }}>
+                <select style={{ width: '100px', height: '25px', margin: '8px 0px 0px 0px', padding: '0px 5px', border: '0', color: 'white', borderRadius: '3px', background: '#279ED4', }}>
+                  <option>새로 만들기</option>
+                </select>
+              </div>
+              <img style={{ width: '20px', float: 'right', margin: '12px 5px 0px 0px', padding: '0px 5px',  }} src={zzum}/>
+              <img style={{ width: '17px', float: 'right', margin: '12px 0px 0px 0px', padding: '0px 5px', }} src={minmax}/>
+              <div style={{ float: 'right', margin: '6px 0px 0px 0px', }}><SearchBoxTest></SearchBoxTest></div>
+              {/* <div style={{ fontSize: '22px', fontWeight: '700', float: 'right', }}>검색</div> */}
             </div>
-          </div>
           <hr/>
 
           <div style={{ display: 'flex', overflowX:'auto', overflowY:'hidden', }} >
@@ -169,7 +212,12 @@ function App () {
                 document.getElementById('listMain').innerHTML += 
                 "<div id='listIndivideMain" + number + "' class='listIndivideMain'>" +
                   "<div class='listIndivideMainInner1'>" +
-                    "<span class='listIndivideMainInner2'>" + number + "</span>" +
+                    "<div class='flex'>" +
+                      "<span class='listIndivideMainInner2'>" + number + "</span>" +
+                      "<span id='listIndivideNum" + number + "' class='listIndivideMainInner3'>0</span>" +
+                      "<img class='image' src='" + plus + "'/>" +
+                      "<img class='image' src='" + zzum + "'/>" +
+                    "</div>" +
                   "</div>" +
                   "<div id='" + number + "'></div>" +
                   "<hr id='" + number + "hr' class='hr'/>" +
@@ -185,6 +233,7 @@ function App () {
       </div>
     </div>
   );
+}
 }
 
 export default App;
